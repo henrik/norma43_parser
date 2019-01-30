@@ -14,7 +14,7 @@ gem 'norma43_parser', git: "git@github.com:sequra/norma43_parser.git"
 require "norma43"
 
 norma43_file_contents = File.open("path_to_file.n43", encoding: "iso-8859-1")
-document = norma43.parse norma43_file_contents
+document = Norma43.parse norma43_file_contents
 ```
 
 ### Document
@@ -22,12 +22,16 @@ document = norma43.parse norma43_file_contents
 The parser returns a Norma43 Document that may include multiple accounts.
 
 ```
-accounts=[account1..accountN]
+document.accounts  # => [account1, account2, ..account_n]
 ```
 
 ### Account 
 
 The account object has all the information described in the standard format and the transactions between **start_date** and **end_date**.
+
+```
+document.accounts.first  # => an object with the below attributes
+```
 
 ```
 abbreviated_name="ACCOUNT NAME",
@@ -52,6 +56,10 @@ transactions=[transaction1..transactionN]
 The transaction object has all the information described in the standard format and may include a maximum of five additional items.
 
 ```
+document.accounts.first.transactions.first  # => an object with the below attributes
+```
+
+```
 additional_currency=nil,
 amount=3206,
 amount_code=2,
@@ -69,6 +77,11 @@ additional_items=[additional_item1..aditional_item5]
 ### Additional items
 
 The additional item object has an identifier and two free text fields that may include or not relevant information
+
+
+```
+document.accounts.first.transactions.first  # => an object with the below attributes
+```
 
 ```
 data_code=1,
